@@ -1,0 +1,36 @@
+
+services:
+  mysql:
+    image: mysql
+    restart: always
+    container_name: "saasapp_db"
+    environment:
+      MYSQL_ROOT_PASSWORD: dbPassword
+      MYSQL_DATABASE: saasapp_db
+      MYSQL_USER: dbUser
+      MYSQL_PASSWORD: dbPassword
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: .
+    container_name: "saasapp_backend"
+    restart: always
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/saasapp_db
+      SPRING_DATASOURCE_USERNAME: dbUser
+      SPRING_DATASOURCE_PASSWORD: dbPassword
+volumes:
+  mysql_data:

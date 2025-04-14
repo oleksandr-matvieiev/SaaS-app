@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SaaSAppApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SaaSAppApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SaaSAppApplication.class, args);
+    }
 
 }
