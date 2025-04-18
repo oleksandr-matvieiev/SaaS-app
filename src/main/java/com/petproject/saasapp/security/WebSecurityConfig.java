@@ -46,7 +46,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorizeHttpRequests ->
                         authorizeHttpRequests
                                 .requestMatchers("/register", "/login").permitAll()
-                                .requestMatchers("/get-current-user").authenticated()
+                                .requestMatchers("/get-current-user").hasRole("ADMIN")
 
                 );
         http.addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
